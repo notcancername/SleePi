@@ -1,4 +1,5 @@
-#!/bin/bash
-~/eeg/setuptty.sh
+#!/bin/sh
+set -xeu
+./setuptty.sh
 echo "START" &>> ~/eeg.log
-~/eeg/processor.py &>> ~/eeg.log
+./processor.py &>> eeg.log

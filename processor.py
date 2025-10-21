@@ -1,7 +1,8 @@
-#!/usr/bin/python2
+#! /usr/bin/env python3
 import datetime
 import openeeg
 import pyqtgraph as pg
+import pyqtgraph.Qt as Qt
 from pyqtgraph.Qt import QtGui, QtCore
 import numpy as np
 import threading
@@ -10,12 +11,12 @@ import time
 print("Starting EEG reader")
 
 
-data1 = np.ones((1024,), dtype=np.int)*512
-data2 = np.ones((1024,), dtype=np.int)*512
+data1 = np.ones((1024,), dtype=int)*512
+data2 = np.ones((1024,), dtype=int)*512
 
 def qtSlave():
-    app = QtGui.QApplication([])
-    win = pg.GraphicsWindow(title="My plotting examples")
+    app = Qt.mkQApp()
+    win = pg.GraphicsLayoutWidget()
     win.resize(480,360)
     win.setWindowTitle('EEG')
     plotwin1 = win.addPlot(row=0,col=0,title="Channel 1")
@@ -24,6 +25,7 @@ def qtSlave():
     curve2 = plotwin2.plot(pen='y')
     plotwin1.setYRange(0,1024,padding=0)
     plotwin2.setYRange(0,1024,padding=0)
+    win.show()
     while True:
         curve1.setData(y=data1, _callSync='off')
         curve2.setData(y=data2, _callSync='off')
